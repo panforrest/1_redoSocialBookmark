@@ -10,7 +10,8 @@ require('dotenv').config()
 var routes = require('./routes/index');
 // var users = require('./routes/users');
 var api = require('./routes/api');
-var scrape = require('./routes/scrape');
+// var scrape = require('./routes/scrape');
+var account = require('./routes/account')
 
 var app = express();
 
@@ -39,7 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 // app.use('/users', users);
 app.use('/api', api);
-app.use('/scrape', scrape);
+// app.use('/scrape', scrape);
+app.use('/account', account)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
