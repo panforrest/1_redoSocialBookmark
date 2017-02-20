@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs')
 
 module.exports = {
  
-    find: function(params){
+    find: function(params, isRaw){
         return new Promise(function(resolve, reject){
             Profile.find(params, function(err, profiles){
                 if (err) {
@@ -12,12 +12,17 @@ module.exports = {
                 	return
                 }
 
+                if (isRaw) {
+                    resolve(profiles)
+                    return
+                }
+
                 var summaries = []
                 profiles.forEach(function(profile){
                     summaries.push(profile.summary())
                 })
 
-                resolve(profiles)
+                resolve(summaries)
             })    
         })
     },
@@ -30,7 +35,7 @@ module.exports = {
                     return
                 }
 
-                resolve(profile(summary))
+                resolve(profile.summary())
             })
         })
     },
@@ -46,7 +51,7 @@ module.exports = {
                     reject(err)
                     return
                 }
-                resolve(profile)
+                resolve(profile.summary())
             })
         })
     }    	
