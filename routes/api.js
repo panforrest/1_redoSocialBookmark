@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var controllers = require('../controllers')
+// var bcrypt = require('bcryptjs')
 
 router.post('/:resource', function(req, res, next){
     var resource = req.params.resource
