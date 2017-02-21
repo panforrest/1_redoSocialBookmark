@@ -3,7 +3,7 @@ import superagent from 'superagent'
 export default {      //SHOULD BE export default NOT module.exports =
     get: (endpoint, params, callback) => {
         superagent
-        .get('/api/profile')      //SHOULD BE '/api/profile'
+        .get(endpoint)      
         .query(params)
         .set('Accept', 'application/json')
         .end((err, response) => {

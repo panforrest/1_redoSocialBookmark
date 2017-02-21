@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
-import superagent from 'superagent'
+// import superagent from 'superagent'
 import { APIManager } from '../../utils'
 
 class Profiles extends Component {
+
+	constructor(){
+		super()
+		this.state = {
+			profiles: []
+		}
+	}
 
     componentDidMount(){
     	// console.log('componentDidMount: ')
@@ -18,6 +25,10 @@ class Profiles extends Component {
     	// 	}
         APIManager.get('/api/profile', null, (err, response) => {
         	console.log(JSON.stringify(response))
+        	const results = response.results
+        	this.setState({
+                profiles: results
+        	})
         })
     	// 	console.log(JSON.stringify(response.body))
     	// })
@@ -25,9 +36,17 @@ class Profiles extends Component {
     }
 
 	render() {
+        const list = this.state.profiles.map((profile, i) => {     
+        	return (
+        	    <li key={profile.id}> { profile.firstName } </li>
+        	)
+        }) 
+
 		return (
 			<div>
-			    This is Profile container
+			    <ol>
+			        {list}
+			    </ol>
 			</div>
 
 		)

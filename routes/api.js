@@ -48,11 +48,11 @@ router.get('/:resource', function(req, res, next) {
         return
     }
 
-    controller.find(req.query)
+    controller.find(req.query, false)
     .then(function(entities){
         res.json({
             confirmation: 'success',
-            resource: entities
+            results: entities       //WAS resource: entities
         })    	
     })
     .catch(function(err){
@@ -61,7 +61,7 @@ router.get('/:resource', function(req, res, next) {
     		message: err
     	})
     })
-
+});
 router.get('/:resource/:id', function(req, res, next){
 
     var resource = req.params.resource
@@ -93,6 +93,6 @@ router.get('/:resource/:id', function(req, res, next){
 })
 
 
-});
+
 
 module.exports = router;

@@ -21691,11 +21691,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _superagent = __webpack_require__(182);
-	
-	var _superagent2 = _interopRequireDefault(_superagent);
-	
-	var _utils = __webpack_require__(190);
+	var _utils = __webpack_require__(182);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21704,6 +21700,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import superagent from 'superagent'
+	
 	
 	var Profiles = function (_Component) {
 	  _inherits(Profiles, _Component);
@@ -21711,12 +21709,19 @@
 	  function Profiles() {
 	    _classCallCheck(this, Profiles);
 	
-	    return _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).call(this));
+	
+	    _this.state = {
+	      profiles: []
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Profiles, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      // console.log('componentDidMount: ')
 	      // superagent
 	      // .get('/api/profile')
@@ -21730,6 +21735,10 @@
 	      // 	}
 	      _utils.APIManager.get('/api/profile', null, function (err, response) {
 	        console.log(JSON.stringify(response));
+	        var results = response.results;
+	        _this2.setState({
+	          profiles: results
+	        });
 	      });
 	      // 	console.log(JSON.stringify(response.body))
 	      // })
@@ -21737,10 +21746,24 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var list = this.state.profiles.map(function (profile, i) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: profile.id },
+	          ' ',
+	          profile.firstName,
+	          ' '
+	        );
+	      });
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'This is Profile container'
+	        _react2.default.createElement(
+	          'ol',
+	          null,
+	          list
+	        )
 	      );
 	    }
 	  }]);
@@ -21752,6 +21775,53 @@
 
 /***/ },
 /* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.APIManager = undefined;
+	
+	var _APIManager = __webpack_require__(183);
+	
+	var _APIManager2 = _interopRequireDefault(_APIManager);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.APIManager = _APIManager2.default;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _superagent = __webpack_require__(184);
+	
+	var _superagent2 = _interopRequireDefault(_superagent);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = { //SHOULD BE export default NOT module.exports =
+	    get: function get(endpoint, params, callback) {
+	        _superagent2.default.get(endpoint).query(params).set('Accept', 'application/json').end(function (err, response) {
+	            if (err) {
+	                callback(err, null); //SHOULD BE callback(err, null)
+	                return;
+	            }
+	            callback(null, response.body); //SHOULD BE callback(null, response.body) 
+	        });
+	    }
+	};
+
+/***/ },
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21775,12 +21845,12 @@
 	  root = undefined;
 	}
 	
-	var Emitter = __webpack_require__(183);
-	var RequestBase = __webpack_require__(184);
-	var isObject = __webpack_require__(185);
-	var isFunction = __webpack_require__(186);
-	var ResponseBase = __webpack_require__(187);
-	var shouldRetry = __webpack_require__(189);
+	var Emitter = __webpack_require__(185);
+	var RequestBase = __webpack_require__(186);
+	var isObject = __webpack_require__(187);
+	var isFunction = __webpack_require__(188);
+	var ResponseBase = __webpack_require__(189);
+	var shouldRetry = __webpack_require__(191);
 	
 	/**
 	 * Noop.
@@ -22701,7 +22771,7 @@
 	};
 
 /***/ },
-/* 183 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22865,7 +22935,7 @@
 	};
 
 /***/ },
-/* 184 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22875,7 +22945,7 @@
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(185);
+	var isObject = __webpack_require__(187);
 	
 	/**
 	 * Expose `RequestBase`.
@@ -23453,7 +23523,7 @@
 	};
 
 /***/ },
-/* 185 */
+/* 187 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23475,7 +23545,7 @@
 	module.exports = isObject;
 
 /***/ },
-/* 186 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23487,7 +23557,7 @@
 	 * @return {Boolean}
 	 * @api private
 	 */
-	var isObject = __webpack_require__(185);
+	var isObject = __webpack_require__(187);
 	
 	function isFunction(fn) {
 	  var tag = isObject(fn) ? Object.prototype.toString.call(fn) : '';
@@ -23497,7 +23567,7 @@
 	module.exports = isFunction;
 
 /***/ },
-/* 187 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23506,7 +23576,7 @@
 	 * Module dependencies.
 	 */
 	
-	var utils = __webpack_require__(188);
+	var utils = __webpack_require__(190);
 	
 	/**
 	 * Expose `ResponseBase`.
@@ -23634,7 +23704,7 @@
 	};
 
 /***/ },
-/* 188 */
+/* 190 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23708,7 +23778,7 @@
 	};
 
 /***/ },
-/* 189 */
+/* 191 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23729,54 +23799,6 @@
 	  // Superagent timeout
 	  if (err && 'timeout' in err && err.code == 'ECONNABORTED') return true;
 	  return false;
-	};
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.APIManager = undefined;
-	
-	var _APIManager = __webpack_require__(191);
-	
-	var _APIManager2 = _interopRequireDefault(_APIManager);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.APIManager = _APIManager2.default;
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _superagent = __webpack_require__(182);
-	
-	var _superagent2 = _interopRequireDefault(_superagent);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = { //SHOULD BE export default NOT module.exports =
-	    get: function get(endpoint, params, callback) {
-	        _superagent2.default.get('/api/profile') //SHOULD BE '/api/profile'
-	        .query(params).set('Accept', 'application/json').end(function (err, response) {
-	            if (err) {
-	                callback(err, null); //SHOULD BE callback(err, null)
-	                return;
-	            }
-	            callback(null, response.body); //SHOULD BE callback(null, response.body) 
-	        });
-	    }
 	};
 
 /***/ }
