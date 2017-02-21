@@ -21695,6 +21695,8 @@
 	
 	var _superagent2 = _interopRequireDefault(_superagent);
 	
+	var _utils = __webpack_require__(190);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21716,15 +21718,21 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // console.log('componentDidMount: ')
-	      _superagent2.default.get('/api/profile').query(null).set('Accept', 'applicaiton/json').end(function (err, response) {
-	        if (err) {
-	          var msg = err.message || err;
-	          alert(msg);
-	          return;
-	        }
-	
-	        console.log(JSON.stringify(response.body));
+	      // superagent
+	      // .get('/api/profile')
+	      // .query(null)
+	      // .set('Accept', 'applicaiton/json')
+	      // .end((err, response) => {
+	      // 	if (err) {
+	      // 		const msg = err.message || err
+	      // 		alert(msg)
+	      // 		return
+	      // 	}
+	      _utils.APIManager.get('/api/profile', null, function (err, response) {
+	        console.log(JSON.stringify(response));
 	      });
+	      // 	console.log(JSON.stringify(response.body))
+	      // })
 	    }
 	  }, {
 	    key: 'render',
@@ -23721,6 +23729,54 @@
 	  // Superagent timeout
 	  if (err && 'timeout' in err && err.code == 'ECONNABORTED') return true;
 	  return false;
+	};
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.APIManager = undefined;
+	
+	var _APIManager = __webpack_require__(191);
+	
+	var _APIManager2 = _interopRequireDefault(_APIManager);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.APIManager = _APIManager2.default;
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _superagent = __webpack_require__(182);
+	
+	var _superagent2 = _interopRequireDefault(_superagent);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = { //SHOULD BE export default NOT module.exports =
+	    get: function get(endpoint, params, callback) {
+	        _superagent2.default.get('/api/profile') //SHOULD BE '/api/profile'
+	        .query(params).set('Accept', 'application/json').end(function (err, response) {
+	            if (err) {
+	                callback(err, null); //SHOULD BE callback(err, null)
+	                return;
+	            }
+	            callback(null, response.body); //SHOULD BE callback(null, response.body) 
+	        });
+	    }
 	};
 
 /***/ }
