@@ -21767,7 +21767,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var list = this.state.profiles.map(function (profile, i) {
+	            var list = this.props.profiles.map(function (profile, i) {
 	                return _react2.default.createElement(
 	                    'li',
 	                    { key: profile.id },
@@ -26456,10 +26456,11 @@
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 	    var action = arguments[1];
 	    //NOT module.exports = {
-	    // let updated = Object.assign({}, state)
+	    var updated = Object.assign({}, state);
 	    switch (action.type) {//NOT switch(state=initialState, action) => {
 	        case _constants2.default.PROFILES_RECEIVED:
 	            console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
+	            updated['list'] = action.profiles;
 	
 	            return state; //status
 	
