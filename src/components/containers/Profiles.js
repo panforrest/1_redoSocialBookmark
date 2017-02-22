@@ -38,7 +38,7 @@ class Profiles extends Component {
 
     }
 
-	render() {
+	render() { 
         const list = this.props.profiles.map((profile, i) => {     
         	return (
         	    <li key={profile.id}> { profile.firstName } </li>

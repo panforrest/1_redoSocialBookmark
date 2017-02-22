@@ -26462,10 +26462,10 @@
 	            console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
 	            updated['list'] = action.profiles;
 	
-	            return state; //status
+	            return updated; //NOT status
 	
 	        default:
-	            return state; //status
+	            return state; //NOTstatus
 	
 	    }
 	};
