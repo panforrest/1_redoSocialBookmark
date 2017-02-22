@@ -13,5 +13,19 @@ export default {      //SHOULD BE export default NOT module.exports =
             }
             callback(null, response.body)     //SHOULD BE callback(null, response.body) 
         })
+    },
+
+    post: (endpoint, params, callback) => {
+        superagent
+        .post(endpoint)                    //THIS SHOULD NOT BE get
+        .send(params)
+        .set('Accept', 'application/json')
+        .end((err, response) => {
+            if (err){
+                callback(err, null)       //SHOULD NOT BE callback(null, err)
+                return
+            }
+            callback(null, response.body)      //IT IS CRITICAL TO HAVE response.body, NOT response IN HERE
+        })
     }
 }

@@ -24,7 +24,7 @@ class Profiles extends Component {
     	// 		return
     	// 	}
         APIManager.get('/api/profile', null, (err, response) => {
-        	console.log(JSON.stringify(response))
+        	// console.log(JSON.stringify(response))
         	const results = response.results
         	this.setState({
                 profiles: results

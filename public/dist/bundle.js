@@ -21739,7 +21739,7 @@
 	      // 		return
 	      // 	}
 	      _utils.APIManager.get('/api/profile', null, function (err, response) {
-	        console.log(JSON.stringify(response));
+	        // console.log(JSON.stringify(response))
 	        var results = response.results;
 	        _this2.setState({
 	          profiles: results
@@ -21821,6 +21821,17 @@
 	                return;
 	            }
 	            callback(null, response.body); //SHOULD BE callback(null, response.body) 
+	        });
+	    },
+	
+	    post: function post(endpoint, params, callback) {
+	        _superagent2.default.post(endpoint) //THIS SHOULD NOT BE get
+	        .send(params).set('Accept', 'application/json').end(function (err, response) {
+	            if (err) {
+	                callback(err, null); //SHOULD NOT BE callback(null, err)
+	                return;
+	            }
+	            callback(null, response.body); //IT IS CRITICAL TO HAVE response.body, NOT response IN HERE
 	        });
 	    }
 	};
@@ -23822,6 +23833,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _utils = __webpack_require__(182);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23852,18 +23865,33 @@
 	  _createClass(Signup, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      console.log('componentDidMount: ');
+	      // console.log('componentDidMount: ')
 	    }
 	  }, {
 	    key: 'update',
 	    value: function update(event) {
 	      // console.log('updatedEvent: ')
-	      var updated = Object.assign({}, this.state.visitor); //var visitor = 
-	      updated[event.target.id] = event.target.value; //var updated['event.target.id']
+	      var updated = Object.assign({}, this.state.visitor); //NOT var visitor = 
+	      updated[event.target.id] = event.target.value; //NOT var updated['event.target.id']
 	      this.setState({
 	        visitor: updated
 	      });
-	      console.log(JSON.stringify(this.state.visitor));
+	      // console.log(JSON.stringify(this.state.visitor))
+	    }
+	  }, {
+	    key: 'register',
+	    value: function register(event) {
+	      event.preventDefault();
+	      console.log('REGISTER: ' + JSON.stringify(this.state.visitor));
+	      _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
+	        if (err) {
+	          var msg = err.message || err;
+	          alert(msg);
+	          return;
+	        }
+	
+	        console.log('REGISTER: ' + JSON.stringify(response)); //NOT JSON.stringify(response.result)
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -23887,7 +23915,7 @@
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'button',
-	          null,
+	          { onClick: this.register.bind(this) },
 	          'Submit'
 	        )
 	      );
