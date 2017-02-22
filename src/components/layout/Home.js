@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Profiles } from '../containers'
+import { Profiles, Signup } from '../containers'
+
 
 class Home extends Component {
 	render() {
@@ -15,7 +16,8 @@ class Home extends Component {
                 </div>                
             
                 <div className="col-md-3">
-                    Right
+                    
+                    <Signup />
                 </div>                
             </div>
 		)
