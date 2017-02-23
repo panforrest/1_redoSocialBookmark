@@ -51,13 +51,19 @@ class Signup extends Component {
 	render(){
 		return(
 			<div>
-                <h2>Sign UP</h2>
-			    <input onChange={this.update.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
-			    <input onChange={this.update.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
-			    <input onChange={this.update.bind(this)} type="text" id="email" placeholder="Email" /><br />
-			    <input onChange={this.update.bind(this)} type="text" id="password" placeholder="Password" /><br />
-			    <br />
-			    <button onClick={this.register.bind(this)}>Submit</button>
+                {
+                (this.props.currentUser != null) ? <h2>Welcome, {this.props.currentUser.firstName}</h2>:
+                <div>
+                    <h2>Sign UP</h2>
+
+    			    <input onChange={this.update.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
+    			    <input onChange={this.update.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
+    			    <input onChange={this.update.bind(this)} type="text" id="email" placeholder="Email" /><br />
+    			    <input onChange={this.update.bind(this)} type="text" id="password" placeholder="Password" /><br />
+    			    <br />
+    			    <button onClick={this.register.bind(this)}>Submit</button>
+                </div>
+               }
 			</div>
 
 		)
@@ -66,7 +72,8 @@ class Signup extends Component {
 
 const stateToProps = (state) => {
     return {
-        profiles: state.profile.list
+        profiles: state.profile.list,
+        currentUser: state.account.currentUser   
     }
 }
 
