@@ -12,7 +12,13 @@ export default(state=initialState, action) => {        //NOT module.exports = {
             updated['list'] = action.profiles
 
             return updated //NOT status
-        
+
+        case constants.PROFILE_CREATED:
+            let updatedList = Object.assign([], updated.list)   //NOT let updatedList = Object.assign({}, updated)   
+            updatedList.push(action.profile)
+            updated['list'] = updatedList
+            return updated
+
         default:
             return state   //NOTstatus
 

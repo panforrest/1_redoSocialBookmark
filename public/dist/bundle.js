@@ -26217,6 +26217,13 @@
 	            type: _constants2.default.PROFILES_RECEIVED,
 	            profiles: profiles
 	        };
+	    },
+	
+	    profileCreated: function profileCreated(profile) {
+	        return {
+	            type: _constants2.default.PROFILE_CREATED,
+	            profile: profile
+	        };
 	    }
 	
 	};
@@ -26231,7 +26238,8 @@
 	    value: true
 	});
 	exports.default = {
-	    PROFILES_RECEIVED: 'PROFILES_RECEIVED' //NOT PROFILES_RECEIVED: PROFILES_RECEIVED	
+	    PROFILES_RECEIVED: 'PROFILES_RECEIVED', //NOT PROFILES_RECEIVED: PROFILES_RECEIVED	
+	    PROFILE_CREATED: 'PROFILE_CREATED'
 	};
 
 /***/ },
@@ -26251,6 +26259,12 @@
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _utils = __webpack_require__(182);
+	
+	var _reactRedux = __webpack_require__(192);
+	
+	var _actions = __webpack_require__(230);
+	
+	var _actions2 = _interopRequireDefault(_actions);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26298,6 +26312,8 @@
 	  }, {
 	    key: 'register',
 	    value: function register(event) {
+	      var _this2 = this;
+	
 	      event.preventDefault();
 	      console.log('REGISTER: ' + JSON.stringify(this.state.visitor));
 	      _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
@@ -26308,6 +26324,7 @@
 	        }
 	
 	        console.log('REGISTER: ' + JSON.stringify(response)); //NOT JSON.stringify(response.result)
+	        _this2.props.profileCreated(response.result); //NOT this.state.profileCreated(response), BUT WHY? 
 	      });
 	    }
 	  }, {
@@ -26342,7 +26359,21 @@
 	  return Signup;
 	}(_react.Component);
 	
-	exports.default = Signup;
+	var stateToProps = function stateToProps(state) {
+	  return {
+	    profiles: state.profile.list
+	  };
+	};
+	
+	var dispatchToProps = function dispatchToProps(dispatch) {
+	  return {
+	    profileCreated: function profileCreated(profile) {
+	      return dispatch(_actions2.default.profileCreated(profile));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Signup);
 
 /***/ },
 /* 233 */
@@ -26463,6 +26494,12 @@
 	            updated['list'] = action.profiles;
 	
 	            return updated; //NOT status
+	
+	        case _constants2.default.PROFILE_CREATED:
+	            var updatedList = Object.assign([], updated.list); //NOT let updatedList = Object.assign({}, updated)   
+	            updatedList.push(action.profile);
+	            updated['list'] = updatedList;
+	            return updated;
 	
 	        default:
 	            return state; //NOTstatus
