@@ -4,6 +4,42 @@ var controllers = require('../controllers')
 var bcrypt = require('bcryptjs')
 var utils = require('../utils')
 
+router.post('/register', function(req, res, next){   //THE N'TH TIME TO FORGET post
+    var credentials = req.body   //NOT redentials = query.body
+
+    controllers.profile
+    .create(credentials)      //NOT create(profile)
+
+    .then(function(profile){
+        var token = utils.JWT.sign({id: profile.id}, process.env.TOKEN_SECRET)
+        req.session.token = token
+        res.json({
+            confirmation: 'success',
+            profile: profile,      //NOt result: profile
+            token: token          //DON'T FORGET
+        })
+    })
+    .catch(function(err){      //NOT .cacthc(function(err){
+        res.json({
+            confirmation: 'fail',
+            message: err.message || err
+        })
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get('/:action', function(req, res, next){
 	var action = req.params.action
 
@@ -19,7 +55,7 @@ router.get('/:action', function(req, res, next){
         if (req.session == null) {
         	res.json({
         		confirmation: 'success',
-        		message: 'User not logged in'
+        		message: 'User not logged in, no session'
         	})
         	return
         }
@@ -27,7 +63,7 @@ router.get('/:action', function(req, res, next){
         if (req.session.token == null) {
         	res.json({
         		confirmation: 'success',
-        		message: 'User not logged in'
+        		message: 'User not logged in, no token'
         	})
         	return
         }

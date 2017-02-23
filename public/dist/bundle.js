@@ -26316,7 +26316,7 @@
 	
 	      event.preventDefault();
 	      console.log('REGISTER: ' + JSON.stringify(this.state.visitor));
-	      _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
+	      _utils.APIManager.post('/account/register', this.state.visitor, function (err, response) {
 	        if (err) {
 	          var msg = err.message || err;
 	          alert(msg);
@@ -26324,7 +26324,7 @@
 	        }
 	
 	        console.log('REGISTER: ' + JSON.stringify(response)); //NOT JSON.stringify(response.result)
-	        _this2.props.profileCreated(response.result); //NOT this.state.profileCreated(response), BUT WHY? 
+	        _this2.props.profileCreated(response.profile); //NOT this.props.profileCreated(response.result) 
 	      });
 	    }
 	  }, {

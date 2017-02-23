@@ -34,7 +34,7 @@ class Signup extends Component {
     register(event){
     	event.preventDefault()
     	console.log('REGISTER: '+JSON.stringify(this.state.visitor))
-    	APIManager.post('/api/profile', this.state.visitor, (err, response) => {    
+    	APIManager.post('/account/register', this.state.visitor, (err, response) => {    
     		if (err){
                 let msg = err.message || err
                 alert(msg)
@@ -43,7 +43,8 @@ class Signup extends Component {
 
 
     		console.log('REGISTER: '+JSON.stringify(response))   //NOT JSON.stringify(response.result)
-            this.props.profileCreated(response.result)     //NOT this.state.profileCreated(response), BUT WHY? 
+            this.props.profileCreated(response.profile)     //NOT this.props.profileCreated(response.result) 
+
     	})
     }
 
