@@ -17,9 +17,9 @@ class Signup extends Component {
         }
 	}
 
-	componentDidMount(){
-		// console.log('componentDidMount: ')
-	}
+	// componentDidMount(){
+	// 	// console.log('componentDidMount: ')
+	// }
 
     update(event){
     	// console.log('updatedEvent: ')
