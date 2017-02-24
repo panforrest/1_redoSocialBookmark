@@ -25,7 +25,15 @@ export default {      //SHOULD BE export default NOT module.exports =
                 callback(err, null)       //SHOULD NOT BE callback(null, err)
                 return
             }
-            callback(null, response.body)      //IT IS CRITICAL TO HAVE response.body, NOT response IN HERE
+
+        console.log('APIManager: '+JSON.stringify(response.body))
+        const confirmation = response.body.confirmation
+        if (confirmation != 'success'){
+            callback({message: response.body.message}, null)
+            return
+        }
+
+        callback(null, response.body)      //IT IS CRITICAL TO HAVE response.body, NOT response IN HERE
         })
     }
 }

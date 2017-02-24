@@ -12,6 +12,10 @@ export default (state=initialState, action) => {   //NOT export default (state=i
             updated['currentUser'] = action.profile
     	    return updated
 
+        case constants.CURRENT_USER_RECEIVED:
+            updated['currentUser'] = action.profile
+    	    return updated            	    
+
     	default:
     	    return state
     }
