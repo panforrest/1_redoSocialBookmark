@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import actions from '../../actions'
+import { Signup } from './index.js'
 
 class Admin extends Component {
 	render() {
@@ -8,9 +9,7 @@ class Admin extends Component {
 			<div>
 
                 {(this.props.currentUser != null) ? <h2>Welcome, {this.props.currentUser.firstName}</h2>:
-                    <div>
-                        User is not logged in!
-                    </div>
+                    <Signup />    
                 }
  
 			</div>

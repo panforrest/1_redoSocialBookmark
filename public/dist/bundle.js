@@ -26634,6 +26634,8 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
+	var _index = __webpack_require__(180);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26662,11 +26664,7 @@
 						null,
 						'Welcome, ',
 						this.props.currentUser.firstName
-					) : _react2.default.createElement(
-						'div',
-						null,
-						'User is not logged in!'
-					)
+					) : _react2.default.createElement(_index.Signup, null)
 				);
 			}
 		}]);
