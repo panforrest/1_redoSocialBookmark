@@ -21654,7 +21654,6 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'col-md-3' },
-	                    _react2.default.createElement(_containers.Signup, null),
 	                    _react2.default.createElement(_containers.Admin, null)
 	                )
 	            );
@@ -26373,48 +26372,39 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                this.props.currentUser != null ? _react2.default.createElement(
+	                _react2.default.createElement(
 	                    'h2',
 	                    null,
-	                    'Welcome, ',
-	                    this.props.currentUser.firstName
-	                ) : _react2.default.createElement(
-	                    'div',
+	                    'Sign UP'
+	                ),
+	                _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.register.bind(this) },
+	                    'Submit'
+	                ),
+	                _react2.default.createElement(
+	                    'h2',
 	                    null,
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        'Sign UP'
-	                    ),
-	                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.register.bind(this) },
-	                        'Submit'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h2',
-	                        null,
-	                        ' Log In '
-	                    ),
-	                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
-	                    ' ',
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.login.bind(this) },
-	                        ' Log In'
-	                    )
+	                    ' Log In '
+	                ),
+	                _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+	                ' ',
+	                _react2.default.createElement('br', null),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.login.bind(this) },
+	                    ' Log In'
 	                )
 	            );
 	        }
@@ -26667,7 +26657,16 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					'This is Admin Container.'
+					this.props.currentUser != null ? _react2.default.createElement(
+						'h2',
+						null,
+						'Welcome, ',
+						this.props.currentUser.firstName
+					) : _react2.default.createElement(
+						'div',
+						null,
+						'User is not logged in!'
+					)
 				);
 			}
 		}]);
@@ -26682,7 +26681,7 @@
 		};
 	};
 	
-	var dispatchToprops = function dispatchToprops(dispatch) {
+	var dispatchToProps = function dispatchToProps(dispatch) {
 		return {
 			profileCreate: function profileCreate(profile) {
 				return dispatch(_actions2.default.profileCreated(profile));

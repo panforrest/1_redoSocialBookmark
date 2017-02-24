@@ -6,8 +6,13 @@ class Admin extends Component {
 	render() {
 		return (
 			<div>
-			    This is Admin Container.
 
+                {(this.props.currentUser != null) ? <h2>Welcome, {this.props.currentUser.firstName}</h2>:
+                    <div>
+                        User is not logged in!
+                    </div>
+                }
+ 
 			</div>
 
 		)
@@ -21,7 +26,7 @@ const stateToProps = (state) => {
 	}
 }
 
-const dispatchToprops = (dispatch) => {
+const dispatchToProps = (dispatch) => {
 	return {
 		profileCreate: (profile) => dispatch(actions.profileCreated(profile)),
 		currentUserReceived: (profile) => dispatch(actions.currentUerReceived(profile))

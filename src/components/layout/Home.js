@@ -17,7 +17,7 @@ class Home extends Component {
             
                 <div className="col-md-3">
                     
-                    <Signup />
+                    
                     <Admin />
                 </div>                
             </div>

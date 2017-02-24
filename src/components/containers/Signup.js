@@ -65,18 +65,16 @@ class Signup extends Component {
 
 	render(){
 		return(
-			<div>
-                {
-                (this.props.currentUser != null) ? <h2>Welcome, {this.props.currentUser.firstName}</h2>:
-                <div>
+			
+                 <div>
                     <h2>Sign UP</h2>
 
-    			    <input onChange={this.update.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
-    			    <input onChange={this.update.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
-    			    <input onChange={this.update.bind(this)} type="text" id="email" placeholder="Email" /><br />
-    			    <input onChange={this.update.bind(this)} type="text" id="password" placeholder="Password" /><br />
-    			    <br />
-    			    <button onClick={this.register.bind(this)}>Submit</button>
+                    <input onChange={this.update.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
+                    <input onChange={this.update.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
+                    <input onChange={this.update.bind(this)} type="text" id="email" placeholder="Email" /><br />
+                    <input onChange={this.update.bind(this)} type="text" id="password" placeholder="Password" /><br />
+                    <br />
+                    <button onClick={this.register.bind(this)}>Submit</button>
 
                     <h2> Log In </h2>
                     <input onChange={this.update.bind(this)} type="text" id="email" placeholder="Email" /><br />
@@ -84,13 +82,12 @@ class Signup extends Component {
                     <button onClick={this.login.bind(this)}> Log In</button>
 
 
-                </div>
+                  </div>
 
 
 
-
-               }
-			</div>
+               
+			
 
 		)
 	}
