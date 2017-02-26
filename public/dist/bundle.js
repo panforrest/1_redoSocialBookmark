@@ -26749,7 +26749,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var list = this.state.bookmarks.map(function (bookmark, i) {
+	      var list = this.props.bookmarks.map(function (bookmark, i) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: bookmark.id },
@@ -26775,7 +26775,7 @@
 	
 	var stateToProps = function stateToProps(state) {
 	  return {
-	    bookmarks: state.bookmarks
+	    bookmarks: state.bookmark.all
 	  };
 	};
 	
@@ -26991,7 +26991,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var initialState = {
-		bookmarks: []
+		all: [] //NOT bookmarks: []
 	};
 	
 	exports.default = function () {
@@ -27004,6 +27004,7 @@
 			case _constants2.default.BOOKMARKS_RECEIVED:
 				// updated['list'] = action.bookmarks
 				console.log('BOOKMARKS_RECEIVED: ' + JSON.stringify(action.bookmarks));
+				updated['all'] = action.bookmarks; //NEWLY ADDED
 				return updated;
 	
 			default:

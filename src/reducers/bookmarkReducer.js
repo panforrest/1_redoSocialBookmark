@@ -1,7 +1,7 @@
 import constants from '../constants'
 
 var initialState = {
-	bookmarks: []
+	all: []   //NOT bookmarks: []
 }
 
 export default(state=initialState, action) =>{
@@ -11,6 +11,7 @@ export default(state=initialState, action) =>{
 		case constants.BOOKMARKS_RECEIVED:
 		    // updated['list'] = action.bookmarks
 		    console.log('BOOKMARKS_RECEIVED: '+JSON.stringify(action.bookmarks))
+		    updated['all'] = action.bookmarks    //NEWLY ADDED
 		    return updated
 
 		default:      //NOT case default:

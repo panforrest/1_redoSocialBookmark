@@ -29,7 +29,7 @@ class Bookmarks extends Component {
     }
 
 	render() {
-        const list = this.state.bookmarks.map(function(bookmark, i) {
+        const list = this.props.bookmarks.map(function(bookmark, i) {
         	return (
         	    <li key={bookmark.id}>{bookmark.description}</li> 
         	)   
@@ -48,7 +48,7 @@ class Bookmarks extends Component {
 
 const stateToProps = (state) => {
 	return {
-		bookmarks: state.bookmarks
+		bookmarks: state.bookmark.all
 	}
 }
 
