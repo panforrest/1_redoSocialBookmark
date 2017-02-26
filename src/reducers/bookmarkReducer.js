@@ -9,7 +9,8 @@ export default(state=initialState, action) =>{
 	switch(action.type){
 		
 		case constants.BOOKMARKS_RECEIVED:
-		    updated['list'] = action.bookmarks
+		    // updated['list'] = action.bookmarks
+		    console.log('BOOKMARKS_RECEIVED: '+JSON.stringify(action.bookmarks))
 		    return updated
 
 		default:      //NOT case default:

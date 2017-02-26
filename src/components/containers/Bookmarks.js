@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-// import { connect } from 'react-redux'
-
+import { connect } from 'react-redux'
+import actions from '../../actions'
 import { APIManager } from '../../utils'   //THIS NOT WORK: import utils from '../../utils'
 
 class Bookmarks extends Component {
@@ -19,11 +19,12 @@ class Bookmarks extends Component {
             	alert(err)
             	return
             }
-            console.log('BOOKMARK LIST: '+JSON.stringify(response))
-            const bookmarks = response.results   //NOT var bookmarks = response.bookmarks
-            this.setState({
-                bookmarks: bookmarks
-            })
+            // console.log('BOOKMARK LIST: '+JSON.stringify(response))
+            // const bookmarks = response.results   //NOT var bookmarks = response.bookmarks
+            // this.setState({
+            //     bookmarks: bookmarks
+            // })
+            this.props.bookmarksReceived(response.results)   //NOT this.props.bookmarksReceived(bookmarks)
     	})
     }
 
@@ -45,4 +46,16 @@ class Bookmarks extends Component {
 	}
 }
 
-export default Bookmarks
+const stateToProps = (state) => {
+	return {
+		bookmarks: state.bookmarks
+	}
+}
+
+const dispatchToProps = (dispatch) => {
+	return {
+		bookmarksReceived: (bookmarks) => dispatch(actions.bookmarksReceived(bookmarks))
+	}
+}
+
+export default connect(stateToProps, dispatchToProps)(Bookmarks)

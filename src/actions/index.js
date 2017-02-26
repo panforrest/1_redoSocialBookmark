@@ -26,7 +26,7 @@ export default {
     bookmarksReceived: (bookmarks) => {
         return{
             type: constants.BOOKMARKS_RECEIVED,
-            bookmarks: bookmarsk
+            bookmarks: bookmarks
         }
     }
 
