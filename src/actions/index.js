@@ -21,6 +21,13 @@ export default {
     		type: constants.CURRENT_USER_RECEIVED,
     		profile: profile
     	}
+    },
+
+    bookmarksReceived: (bookmarks) => {
+        return{
+            type: constants.BOOKMARKS_RECEIVED,
+            bookmarks: bookmarsk
+        }
     }
 
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Profiles, Signup, Admin } from '../containers'
+import { Profiles, Admin, Bookmarks } from '../containers'
 
 
 class Home extends Component {
@@ -13,6 +13,7 @@ class Home extends Component {
                           
                 <div className="col-md-6">
                     Middle
+                    <Bookmarks />
                 </div>                
             
                 <div className="col-md-3">

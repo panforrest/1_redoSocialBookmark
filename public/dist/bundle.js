@@ -60,7 +60,7 @@
 	
 	var _reactRedux = __webpack_require__(192);
 	
-	var _store = __webpack_require__(235);
+	var _store = __webpack_require__(236);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -21649,7 +21649,8 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'col-md-6' },
-	                    'Middle'
+	                    'Middle',
+	                    _react2.default.createElement(_containers.Bookmarks, null)
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -21674,7 +21675,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Admin = exports.Profiles = undefined;
+	exports.Bookmarks = exports.Admin = exports.Profiles = undefined;
 	
 	var _Profiles = __webpack_require__(181);
 	
@@ -21684,11 +21685,16 @@
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
+	var _Bookmarks = __webpack_require__(235);
+	
+	var _Bookmarks2 = _interopRequireDefault(_Bookmarks);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// import Signup from './Signup'
 	exports.Profiles = _Profiles2.default;
 	exports.Admin = _Admin2.default;
-	// import Signup from './Signup'
+	exports.Bookmarks = _Bookmarks2.default;
 
 /***/ },
 /* 181 */
@@ -26240,6 +26246,13 @@
 	            type: _constants2.default.CURRENT_USER_RECEIVED,
 	            profile: profile
 	        };
+	    },
+	
+	    bookmarksReceived: function bookmarksReceived(bookmarks) {
+	        return {
+	            type: _constants2.default.BOOKMARKS_RECEIVED,
+	            bookmarks: bookmarsk
+	        };
 	    }
 	
 	};
@@ -26256,7 +26269,8 @@
 	exports.default = {
 	    PROFILES_RECEIVED: 'PROFILES_RECEIVED', //NOT PROFILES_RECEIVED: PROFILES_RECEIVED	
 	    PROFILE_CREATED: 'PROFILE_CREATED',
-	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED'
+	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
+	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED'
 	};
 
 /***/ },
@@ -26669,16 +26683,82 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _utils = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//import { connect } from 'react-redux'
+	
+	
+	var Bookmarks = function (_Component) {
+	  _inherits(Bookmarks, _Component);
+	
+	  function Bookmarks() {
+	    _classCallCheck(this, Bookmarks);
+	
+	    return _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).apply(this, arguments));
+	  }
+	
+	  _createClass(Bookmarks, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // console.log('conponentDidMount: ')
+	      //console.log('Bookmarks Container: '+JSON.stringify(this.state.Bookmarks))
+	      _utils.APIManager.get('/api/bookmark', null, function (err, response) {
+	        if (err) {
+	          alert(err);
+	          return;
+	        }
+	        console.log('BOOKMARK LIST: ' + JSON.stringify(response));
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'This is Bookmarks Containter'
+	      );
+	    }
+	  }]);
+	
+	  return Bookmarks;
+	}(_react.Component);
+	
+	exports.default = Bookmarks;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	
 	var _redux = __webpack_require__(203);
 	
-	var _reduxThunk = __webpack_require__(236);
+	var _reduxThunk = __webpack_require__(237);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(237);
+	var _reducers = __webpack_require__(238);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26690,7 +26770,8 @@
 		configureStore: function configureStore() {
 			var reducers = (0, _redux.combineReducers)({
 				profile: _reducers.profileReducer,
-				account: _reducers.accountReducer
+				account: _reducers.accountReducer,
+				bookmark: _reducers.bookmarkReducer
 			});
 	
 			store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
@@ -26705,7 +26786,7 @@
 	};
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26733,7 +26814,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26741,23 +26822,28 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.accountReducer = exports.profileReducer = undefined;
+	exports.bookmarkReducer = exports.accountReducer = exports.profileReducer = undefined;
 	
-	var _profileReducer = __webpack_require__(238);
+	var _profileReducer = __webpack_require__(239);
 	
 	var _profileReducer2 = _interopRequireDefault(_profileReducer);
 	
-	var _accountReducer = __webpack_require__(239);
+	var _accountReducer = __webpack_require__(240);
 	
 	var _accountReducer2 = _interopRequireDefault(_accountReducer);
+	
+	var _bookmarkReducer = __webpack_require__(241);
+	
+	var _bookmarkReducer2 = _interopRequireDefault(_bookmarkReducer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.profileReducer = _profileReducer2.default;
 	exports.accountReducer = _accountReducer2.default;
+	exports.bookmarkReducer = _bookmarkReducer2.default;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26801,7 +26887,7 @@
 	};
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26839,6 +26925,43 @@
 	        default:
 	            return state;
 	    }
+	};
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _constants = __webpack_require__(231);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+		bookmarks: []
+	};
+	
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+		var action = arguments[1];
+	
+		var updated = Object.assign({}, state); //THIS LINE NEED TO BE BEFORE THE switch(action.type){}
+		switch (action.type) {
+	
+			case _constants2.default.BOOKMARKS_RECEIVED:
+				updated['list'] = action.bookmarks;
+				return updated;
+	
+			default:
+				//NOT case default:
+				return state;
+		}
 	};
 
 /***/ }
