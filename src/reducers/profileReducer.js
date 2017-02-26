@@ -1,7 +1,8 @@
 import constants from '../constants'
 
 var initialState = {
-	list: []       //SHOULD NOT BE profiles: []
+	list: [],       //SHOULD NOT BE profiles: []
+    selectd: null
 }
 
 export default(state=initialState, action) => {        //NOT module.exports = {
@@ -10,6 +11,8 @@ export default(state=initialState, action) => {        //NOT module.exports = {
         case constants.PROFILES_RECEIVED:
             console.log('PROFILES_RECEIVED: '+JSON.stringify(action.profiles))
             updated['list'] = action.profiles
+            if (action.profiles.length>0)
+                updated['selected'] = action.profiles[0]
 
             return updated //NOT status
 
