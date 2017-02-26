@@ -22,6 +22,9 @@ export default(state=initialState, action) => {        //NOT module.exports = {
             updated['list'] = updatedList
             return updated
 
+        case constants.PROFILE_SELECTED:
+            console.log('PROFILE_SELECTED: '+JSON.stringify(action.profile))    
+
         default:
             return state   //NOTstatus
 

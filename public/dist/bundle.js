@@ -21775,7 +21775,8 @@
 	        key: 'selectProfile',
 	        value: function selectProfile(profile, event) {
 	            event.preventDefault(); //NOT JUST preventDefault()
-	            console.log('Select Profile: ' + JSON.stringify(profile)); //NOT (this.state.proifle)
+	            //console.log('Select Profile: '+JSON.stringify(profile))   //NOT (this.state.proifle)
+	            this.props.profileSelected(profile);
 	        }
 	    }, {
 	        key: 'render',
@@ -21852,6 +21853,9 @@
 	    return {
 	        profilesReceived: function profilesReceived(profiles) {
 	            return dispatch(_actions2.default.profilesReceived(profiles));
+	        },
+	        profileSelected: function profileSelected(profile) {
+	            return dispatch(_actions2.default.profileSelected(profile));
 	        }
 	    };
 	};
@@ -26296,8 +26300,14 @@
 	            type: _constants2.default.BOOKMARKS_RECEIVED,
 	            bookmarks: bookmarks
 	        };
-	    }
+	    },
 	
+	    profileSelected: function profileSelected(profile) {
+	        return {
+	            type: _constants2.default.PROFILE_SELECTED,
+	            profile: profile
+	        };
+	    }
 	};
 
 /***/ },
@@ -26313,7 +26323,8 @@
 	    PROFILES_RECEIVED: 'PROFILES_RECEIVED', //NOT PROFILES_RECEIVED: PROFILES_RECEIVED	
 	    PROFILE_CREATED: 'PROFILE_CREATED',
 	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
-	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED'
+	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED',
+	    PROFILE_SELECTED: 'PROFILE_SELECTED'
 	};
 
 /***/ },
@@ -26971,6 +26982,9 @@
 	            updatedList.push(action.profile);
 	            updated['list'] = updatedList;
 	            return updated;
+	
+	        case _constants2.default.PROFILE_SELECTED:
+	            console.log('PROFILE_SELECTED: ' + JSON.stringify(action.profile));
 	
 	        default:
 	            return state; //NOTstatus
