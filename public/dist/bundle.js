@@ -26701,8 +26701,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import { connect } from 'react-redux'
+	// import { connect } from 'react-redux'
 	
+	//THIS NOT WORK: import utils from '../../utils'
 	
 	var Bookmarks = function (_Component) {
 	  _inherits(Bookmarks, _Component);
@@ -26710,12 +26711,21 @@
 	  function Bookmarks() {
 	    _classCallCheck(this, Bookmarks);
 	
-	    return _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).apply(this, arguments));
+	    //NOT preventDefault()
+	    var _this = _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).call(this)); //NOT construction(){ 
+	
+	
+	    _this.state = {
+	      bookmarks: [] //NOt bookmarks: null
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Bookmarks, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      // console.log('conponentDidMount: ')
 	      //console.log('Bookmarks Container: '+JSON.stringify(this.state.Bookmarks))
 	      _utils.APIManager.get('/api/bookmark', null, function (err, response) {
@@ -26724,15 +26734,32 @@
 	          return;
 	        }
 	        console.log('BOOKMARK LIST: ' + JSON.stringify(response));
+	        var bookmarks = response.results; //NOT var bookmarks = response.bookmarks
+	        _this2.setState({
+	          bookmarks: bookmarks
+	        });
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var list = this.state.bookmarks.map(function (bookmark, i) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: bookmark.id },
+	          bookmark.description
+	        );
+	      });
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'This is Bookmarks Containter'
+	        'This is Bookmarks Containter',
+	        _react2.default.createElement(
+	          'ol',
+	          null,
+	          list
+	        )
 	      );
 	    }
 	  }]);
