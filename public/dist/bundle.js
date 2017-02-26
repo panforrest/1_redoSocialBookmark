@@ -60,7 +60,7 @@
 	
 	var _reactRedux = __webpack_require__(192);
 	
-	var _store = __webpack_require__(234);
+	var _store = __webpack_require__(235);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -21680,7 +21680,7 @@
 	
 	var _Profiles2 = _interopRequireDefault(_Profiles);
 	
-	var _Admin = __webpack_require__(233);
+	var _Admin = __webpack_require__(232);
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
@@ -26260,14 +26260,13 @@
 	};
 
 /***/ },
-/* 232 */,
-/* 233 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26282,7 +26281,7 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
-	var _Presentation = __webpack_require__(239);
+	var _Presentation = __webpack_require__(233);
 	
 	var _utils = __webpack_require__(182);
 	
@@ -26297,317 +26296,192 @@
 	//NOT import utils from '../../utils'
 	
 	var Admin = function (_Component) {
-	  _inherits(Admin, _Component);
+	    _inherits(Admin, _Component);
 	
-	  function Admin() {
-	    _classCallCheck(this, Admin);
+	    function Admin() {
+	        _classCallCheck(this, Admin);
 	
-	    var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this));
-	    // this.state = {
-	    // 	visitor: {
-	    // 		lastName:'',
-	    // 		firstName:'',
-	    // 		email:
-	    // 	}
-	    // }
+	        var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this));
+	        // this.state = {
+	        // 	visitor: {
+	        // 		lastName:'',
+	        // 		firstName:'',
+	        // 		email:
+	        // 	}
+	        // }
 	
 	
-	    _this.state;
-	    return _this;
-	  }
-	
-	  _createClass(Admin, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      _utils.APIManager.get('/account/currentuser', null, function (err, response) {
-	        //REMEMBER , null, HERE
-	        if (err) {
-	          alert(err);
-	          return;
-	        }
-	
-	        if (response.profile == null) {
-	          return;
-	        }
-	
-	        //if user is logged in
-	        console.log('CURRENT USER: ' + JSON.stringify(response.profile));
-	        _this2.props.currentUserReceived(response.profile); //NOT this.state.account.currentUser 
-	      });
-	    }
-	  }, {
-	    key: 'register',
-	    value: function register(visitor) {
-	      var _this3 = this;
-	
-	      //NOT register(event){
-	      // event.preventDefault()  //WHY TO COMMENT OUT HERE
-	      //console.log('REGISTER: '+JSON.stringify(this.state.visitor))
-	      _utils.APIManager.post('/account/register', visitor, function (err, response) {
-	        //NOT , this.state.visitor,   
-	        if (err) {
-	          var msg = err.message || err;
-	          alert(msg);
-	          return;
-	        }
-	
-	        console.log('REGISTER: ' + JSON.stringify(response)); //NOT JSON.stringify(response.result)
-	        _this3.props.profileCreated(response.profile); //NOT this.props.profileCreated(response.result) 
-	      });
+	        _this.state = {
+	            visitor: {
+	                url: ''
+	            }
+	        };
+	        return _this;
 	    }
 	
-	    // WHY DON'T NEED update(event){} METHOD?
-	    // update(event){
-	    //  	// console.log('updatedEvent: ')
-	    //  	let updated = Object.assign({}, this.state.visitor)     //NOT var visitor = 
-	    //  	updated[event.target.id] = event.target.value     //NOT var updated['event.target.id']
-	    //  	this.setState({
-	    //          visitor: updated
-	    //  	})
-	    //  	 console.log(JSON.stringify(this.state.visitor))
-	    //  }
+	    _createClass(Admin, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
 	
-	  }, {
-	    key: 'login',
-	    value: function login(credentials) {
-	      var _this4 = this;
+	            _utils.APIManager.get('/account/currentuser', null, function (err, response) {
+	                //REMEMBER , null, HERE
+	                if (err) {
+	                    alert(err);
+	                    return;
+	                }
 	
-	      //WHY NOT login(event){
-	      // event.preventDefault()   //WHY COMMENT OUT HERE?
-	      // console.log('LOGIN: '+JSON.stringify(this.state.visitor))
-	      _utils.APIManager.post('/account/login', credentials, function (err, response) {
-	        //WHY NOT this.state.visitor
-	        if (err) {
-	          var msg = err.message || err;
-	          alert(msg);
-	          return;
+	                if (response.profile == null) {
+	                    return;
+	                }
+	
+	                //if user is logged in
+	                console.log('CURRENT USER: ' + JSON.stringify(response.profile));
+	                _this2.props.currentUserReceived(response.profile); //NOT this.state.account.currentUser 
+	            });
 	        }
-	        console.log('LOGIN: ' + JSON.stringify(response)); //NOT(this.state.visitor)
-	        _this4.props.currentUserReceived(response.profile); //NOT this.props.currentuserReceived(profile) 
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.props.currentUser == null ? _react2.default.createElement(_Presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) }) : _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Welcome, ',
-	          this.props.currentUser.firstName
-	        )
-	      );
-	    }
-	  }]);
+	    }, {
+	        key: 'register',
+	        value: function register(visitor) {
+	            var _this3 = this;
 	
-	  return Admin;
+	            //NOT register(event){
+	            // event.preventDefault()  //WHY TO COMMENT OUT HERE
+	            //console.log('REGISTER: '+JSON.stringify(this.state.visitor))
+	            _utils.APIManager.post('/account/register', visitor, function (err, response) {
+	                //NOT , this.state.visitor,   
+	                if (err) {
+	                    var msg = err.message || err;
+	                    alert(msg);
+	                    return;
+	                }
+	
+	                console.log('REGISTER: ' + JSON.stringify(response)); //NOT JSON.stringify(response.result)
+	                _this3.props.profileCreated(response.profile); //NOT this.props.profileCreated(response.result) 
+	            });
+	        }
+	
+	        // WHY DON'T NEED update(event){} METHOD?
+	        // update(event){
+	        //  	// console.log('updatedEvent: ')
+	        //  	let updated = Object.assign({}, this.state.visitor)     //NOT var visitor = 
+	        //  	updated[event.target.id] = event.target.value     //NOT var updated['event.target.id']
+	        //  	this.setState({
+	        //          visitor: updated
+	        //  	})
+	        //  	 console.log(JSON.stringify(this.state.visitor))
+	        //  }
+	
+	    }, {
+	        key: 'login',
+	        value: function login(credentials) {
+	            var _this4 = this;
+	
+	            //WHY NOT login(event){
+	            // event.preventDefault()   //WHY COMMENT OUT HERE?
+	            // console.log('LOGIN: '+JSON.stringify(this.state.visitor))
+	            _utils.APIManager.post('/account/login', credentials, function (err, response) {
+	                //WHY NOT this.state.visitor
+	                if (err) {
+	                    var msg = err.message || err;
+	                    alert(msg);
+	                    return;
+	                }
+	                console.log('LOGIN: ' + JSON.stringify(response)); //NOT(this.state.visitor)
+	                _this4.props.currentUserReceived(response.profile); //NOT this.props.currentuserReceived(profile) 
+	            });
+	        }
+	    }, {
+	        key: 'updateLink',
+	        value: function updateLink(event) {
+	            // console.log('updateVisitor: ')
+	            // var updated=Object.assign({}, this.state.visitor)
+	            //    var visitor[event.target.id] = event.target.value
+	            event.preventDefault();
+	
+	            this.setState({ //NOT setState({
+	                link: event.target.value
+	            });
+	            console.log('updateLink: ' + this.state.link);
+	        }
+	    }, {
+	        key: 'submitLink',
+	        value: function submitLink(event) {
+	            event.preventDefault();
+	            //console.log('submitLink: '+this.state.link)
+	
+	            var bookmark = {
+	                profile: this.props.currentUser.id, //NOT profile: this.props.profile 
+	                url: this.state.link
+	            };
+	            console.log('submitLink: ' + JSON.stringify(bookmark));
+	
+	            _utils.APIManager.post('/api/bookmark', bookmark, function (err, response) {
+	                //NOT , this.state.link, 
+	                if (err) {
+	                    var msg = err.message || err;
+	                    alert(err);
+	                    return;
+	                }
+	
+	                console.log('bookmark created: ' + JSON.stringify(response)); //NOT (response.bookmark)
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                this.props.currentUser == null ? _react2.default.createElement(_Presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) }) : _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        'Welcome, ',
+	                        this.props.currentUser.firstName
+	                    ),
+	                    _react2.default.createElement('input', { onChange: this.updateLink.bind(this), type: 'text', id: 'url', placeholder: 'URL' }),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.submitLink.bind(this) },
+	                        'Submit Link'
+	                    ),
+	                    ' ',
+	                    _react2.default.createElement('br', null)
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Admin;
 	}(_react.Component);
 	
 	var stateToProps = function stateToProps(state) {
-	  return {
-	    profile: state.profile.list,
-	    currentUser: state.account.currentUser
-	  };
+	    return {
+	        profile: state.profile.list,
+	        currentUser: state.account.currentUser
+	
+	    };
 	};
 	
 	var dispatchToProps = function dispatchToProps(dispatch) {
-	  return {
-	    profileCreated: function profileCreated(profile) {
-	      return dispatch(_actions2.default.profileCreated(profile));
-	    },
-	    currentUserReceived: function currentUserReceived(profile) {
-	      return dispatch(_actions2.default.currentUserReceived(profile));
-	    }
-	  };
+	    return {
+	        profileCreated: function profileCreated(profile) {
+	            return dispatch(_actions2.default.profileCreated(profile));
+	        },
+	        currentUserReceived: function currentUserReceived(profile) {
+	            return dispatch(_actions2.default.currentUserReceived(profile));
+	        }
+	
+	    };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Admin);
 
 /***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _redux = __webpack_require__(203);
-	
-	var _reduxThunk = __webpack_require__(235);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _reducers = __webpack_require__(236);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	//NOT 'react-redux' 
-	var store; //NOT store(); 
-	
-	//NOT { thunks }
-	exports.default = {
-		configureStore: function configureStore() {
-			var reducers = (0, _redux.combineReducers)({
-				profile: _reducers.profileReducer,
-				account: _reducers.accountReducer
-			});
-	
-			store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
-	
-			return store;
-		},
-	
-		currentStore: function currentStore() {
-			return store;
-		}
-	
-	};
-
-/***/ },
-/* 235 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-	
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-	
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-	
-	exports['default'] = thunk;
-
-/***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.accountReducer = exports.profileReducer = undefined;
-	
-	var _profileReducer = __webpack_require__(237);
-	
-	var _profileReducer2 = _interopRequireDefault(_profileReducer);
-	
-	var _accountReducer = __webpack_require__(238);
-	
-	var _accountReducer2 = _interopRequireDefault(_accountReducer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.profileReducer = _profileReducer2.default;
-	exports.accountReducer = _accountReducer2.default;
-
-/***/ },
-/* 237 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _constants = __webpack_require__(231);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var initialState = {
-	    list: [] //SHOULD NOT BE profiles: []
-	};
-	
-	exports.default = function () {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	    var action = arguments[1];
-	    //NOT module.exports = {
-	    var updated = Object.assign({}, state);
-	    switch (action.type) {//NOT switch(state=initialState, action) => {
-	        case _constants2.default.PROFILES_RECEIVED:
-	            console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
-	            updated['list'] = action.profiles;
-	
-	            return updated; //NOT status
-	
-	        case _constants2.default.PROFILE_CREATED:
-	            var updatedList = Object.assign([], updated.list); //NOT let updatedList = Object.assign({}, updated)   
-	            updatedList.push(action.profile);
-	            updated['list'] = updatedList;
-	            return updated;
-	
-	        default:
-	            return state; //NOTstatus
-	
-	    }
-	};
-
-/***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _constants = __webpack_require__(231);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var initialState = {
-	    currentUser: null //NOT currentUser: {}  
-	};
-	
-	exports.default = function () {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	    var action = arguments[1];
-	    //NOT export default (state=initialState, action){
-	    var updated = Object.assign({}, state); //NOT let updated = Object.assign({}, action.profile)	
-	    switch (action.type) {//NOT switch(action, type){
-	
-	        case _constants2.default.PROFILE_CREATED:
-	            //NOT case constants.CURRENT_USER_RECEIVED:
-	            updated['currentUser'] = action.profile;
-	            return updated;
-	
-	        case _constants2.default.CURRENT_USER_RECEIVED:
-	            updated['currentUser'] = action.profile;
-	            return updated;
-	
-	        default:
-	            return state;
-	    }
-	};
-
-/***/ },
-/* 239 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26617,7 +26491,7 @@
 	});
 	exports.Signup = undefined;
 	
-	var _Signup = __webpack_require__(240);
+	var _Signup = __webpack_require__(234);
 	
 	var _Signup2 = _interopRequireDefault(_Signup);
 	
@@ -26626,7 +26500,7 @@
 	exports.Signup = _Signup2.default;
 
 /***/ },
-/* 240 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26787,6 +26661,185 @@
 	
 	
 	exports.default = Signup;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _redux = __webpack_require__(203);
+	
+	var _reduxThunk = __webpack_require__(236);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _reducers = __webpack_require__(237);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//NOT 'react-redux' 
+	var store; //NOT store(); 
+	
+	//NOT { thunks }
+	exports.default = {
+		configureStore: function configureStore() {
+			var reducers = (0, _redux.combineReducers)({
+				profile: _reducers.profileReducer,
+				account: _reducers.accountReducer
+			});
+	
+			store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	
+			return store;
+		},
+	
+		currentStore: function currentStore() {
+			return store;
+		}
+	
+	};
+
+/***/ },
+/* 236 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+	
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+	
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	exports['default'] = thunk;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.accountReducer = exports.profileReducer = undefined;
+	
+	var _profileReducer = __webpack_require__(238);
+	
+	var _profileReducer2 = _interopRequireDefault(_profileReducer);
+	
+	var _accountReducer = __webpack_require__(239);
+	
+	var _accountReducer2 = _interopRequireDefault(_accountReducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.profileReducer = _profileReducer2.default;
+	exports.accountReducer = _accountReducer2.default;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _constants = __webpack_require__(231);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+	    list: [] //SHOULD NOT BE profiles: []
+	};
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	    //NOT module.exports = {
+	    var updated = Object.assign({}, state);
+	    switch (action.type) {//NOT switch(state=initialState, action) => {
+	        case _constants2.default.PROFILES_RECEIVED:
+	            console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
+	            updated['list'] = action.profiles;
+	
+	            return updated; //NOT status
+	
+	        case _constants2.default.PROFILE_CREATED:
+	            var updatedList = Object.assign([], updated.list); //NOT let updatedList = Object.assign({}, updated)   
+	            updatedList.push(action.profile);
+	            updated['list'] = updatedList;
+	            return updated;
+	
+	        default:
+	            return state; //NOTstatus
+	
+	    }
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _constants = __webpack_require__(231);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+	    currentUser: null //NOT currentUser: {}  
+	};
+	
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	    //NOT export default (state=initialState, action){
+	    var updated = Object.assign({}, state); //NOT let updated = Object.assign({}, action.profile)	
+	    switch (action.type) {//NOT switch(action, type){
+	
+	        case _constants2.default.PROFILE_CREATED:
+	            //NOT case constants.CURRENT_USER_RECEIVED:
+	            updated['currentUser'] = action.profile;
+	            return updated;
+	
+	        case _constants2.default.CURRENT_USER_RECEIVED:
+	            updated['currentUser'] = action.profile;
+	            return updated;
+	
+	        default:
+	            return state;
+	    }
+	};
 
 /***/ }
 /******/ ]);
