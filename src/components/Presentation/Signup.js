@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { APIManager } from '../../utils'
-import { connect } from 'react-redux'
-import actions from '../../actions'
+// import { APIManager } from '../../utils'
+// import { connect } from 'react-redux'
+// import actions from '../../actions'
 
 class Signup extends Component {
 
@@ -28,39 +28,41 @@ class Signup extends Component {
     	this.setState({
             visitor: updated
     	})
-    	 console.log(JSON.stringify(this.state.visitor))
+    	 // console.log(JSON.stringify(this.state.visitor))
     }
 
     login(event){
         event.preventDefault()
         // console.log('LOGIN: '+JSON.stringify(this.state.visitor))
-        APIManager.post('/account/login', this.state.visitor, (err, response) => {  //AGAIN NOT .get
-            if (err){
-                let msg = err.message || err
-                alert(msg)
-                return
-            }
-            console.log('LOGIN: '+JSON.stringify(response))   //NOT(this.state.visitor)
-            this.props.currentUserReceived(response.profile)    //NOT this.props.currentuserReceived(profile) 
-        })
+        this.props.onLogin(this.state.visitor)
+        // APIManager.post('/account/login', this.state.visitor, (err, response) => {  //AGAIN NOT .get
+        //     if (err){
+        //         let msg = err.message || err
+        //         alert(msg)
+        //         return
+        //     }
+        //     console.log('LOGIN: '+JSON.stringify(response))   //NOT(this.state.visitor)
+        //     this.props.currentUserReceived(response.profile)    //NOT this.props.currentuserReceived(profile) 
+        // })
 
     }
 
     register(event){
     	event.preventDefault()
-    	console.log('REGISTER: '+JSON.stringify(this.state.visitor))
-    	APIManager.post('/account/register', this.state.visitor, (err, response) => {    
-    		if (err){
-                let msg = err.message || err
-                alert(msg)
-                return
-    		}
+        this.props.onRegister(this.state.visitor)     //NOT this.state.onRegister(visitor)
+    	// console.log('REGISTER: '+JSON.stringify(this.state.visitor))
+    	// APIManager.post('/account/register', this.state.visitor, (err, response) => {    
+    	// 	if (err){
+     //            let msg = err.message || err
+     //            alert(msg)
+     //            return
+    	// 	}
 
 
-    		console.log('REGISTER: '+JSON.stringify(response))   //NOT JSON.stringify(response.result)
-            this.props.profileCreated(response.profile)     //NOT this.props.profileCreated(response.result) 
+    	// 	console.log('REGISTER: '+JSON.stringify(response))   //NOT JSON.stringify(response.result)
+     //        this.props.profileCreated(response.profile)     //NOT this.props.profileCreated(response.result) 
 
-    	})
+    	// })
     }
 
 	render(){
@@ -93,18 +95,19 @@ class Signup extends Component {
 	}
 }
 
-const stateToProps = (state) => {
-    return {
-        profiles: state.profile.list,
-        currentUser: state.account.currentUser   
-    }
-}
+// const stateToProps = (state) => {
+//     return {
+//         profiles: state.profile.list,
+//         currentUser: state.account.currentUser   
+//     }
+// }
 
-const dispatchToProps = (dispatch) => {
-    return {
-        profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
-        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile))
-    }
-}
+// const dispatchToProps = (dispatch) => {
+//     return {
+//         profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
+//         currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile))
+//     }
+// }
 
-export default connect(stateToProps, dispatchToProps)(Signup)
+// export default connect(stateToProps, dispatchToProps)(Signup)
+export default Signup
