@@ -38,15 +38,20 @@ class Profiles extends Component {
 
     }
 
+    selectProfile(profile, event){
+        event.preventDefault()   //NOT JUST preventDefault()
+        console.log('Select Profile: '+JSON.stringify(profile))   //NOT (this.state.proifle)
+    }
+
 	render() { 
         const list = this.props.profiles.map((profile, i) => { 
             let name = null
             if (this.props.selected == null)
-                name = <span> {profile.firstName} </span>   
+                name = <a onClick={this.selectProfile.bind(this, profile)}><span> {profile.firstName} </span> </a>  
             else if (this.props.selected.id == profile.id)     
-                name = <strong style={{color:'red'}}> {profile.firstName} </strong>
+                name = <a onClick={this.selectProfile.bind(this, profile)}><strong style={{color:'red'}}> {profile.firstName} </strong></a> 
             else
-                name = <span> {profile.firstName} </span>
+                name = <a onClick={this.selectProfile.bind(this, profile)}><span> {profile.firstName} </span></a> 
 
         	return (
         	    <li key={profile.id}> { name } </li>
