@@ -20,6 +20,15 @@ export default(state=initialState, action) =>{
 		    // updated['all'] = action.bookmarks    //NEWLY ADDED
 		    return updated
 
+		case constants.BOOKMARK_CREATED:
+		    // NOT let updatedList = Object.assign({}, updated.list)
+		    let list = (updated[action.bookmark.profile]) ? (updated[action.bookmark.profile]) : []
+		    // NOT updatedList.push(action.bookmakr)
+		    list.push(action.bookmark)
+		    updated[action.bookmark.profile] = list
+
+		    return updated    
+
 		default:      //NOT case default:
 		    return state
 	}

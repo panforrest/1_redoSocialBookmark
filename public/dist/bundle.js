@@ -26313,6 +26313,13 @@
 	            type: _constants2.default.PROFILE_SELECTED,
 	            profile: profile
 	        };
+	    },
+	
+	    bookmarkCreated: function bookmarkCreated(bookmark) {
+	        return {
+	            type: _constants2.default.BOOKMARK_CREATED,
+	            bookmark: bookmark
+	        };
 	    }
 	};
 
@@ -26330,7 +26337,8 @@
 	    PROFILE_CREATED: 'PROFILE_CREATED',
 	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
 	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED',
-	    PROFILE_SELECTED: 'PROFILE_SELECTED'
+	    PROFILE_SELECTED: 'PROFILE_SELECTED',
+	    BOOKMARK_CREATED: 'BOOKMARK_CREATED'
 	};
 
 /***/ },
@@ -26481,6 +26489,8 @@
 	    }, {
 	        key: 'submitLink',
 	        value: function submitLink(event) {
+	            var _this5 = this;
+	
 	            event.preventDefault();
 	            //console.log('submitLink: '+this.state.link)
 	
@@ -26500,6 +26510,7 @@
 	                }
 	
 	                console.log('bookmark created: ' + JSON.stringify(response)); //NOT (response.bookmark)
+	                _this5.props.bookmarkCreated(response.result); //NOT this.props.actions(bookmarkCreated(bookmark))
 	            });
 	        }
 	    }, {
@@ -26548,8 +26559,10 @@
 	        },
 	        currentUserReceived: function currentUserReceived(profile) {
 	            return dispatch(_actions2.default.currentUserReceived(profile));
+	        },
+	        bookmarkCreated: function bookmarkCreated(bookmark) {
+	            return dispatch(_actions2.default.bookmarkCreated(bookmark));
 	        }
-	
 	    };
 	};
 	
@@ -27107,6 +27120,15 @@
 					updated[value] = action.bookmarks;
 				});
 				// updated['all'] = action.bookmarks    //NEWLY ADDED
+				return updated;
+	
+			case _constants2.default.BOOKMARK_CREATED:
+				// NOT let updatedList = Object.assign({}, updated.list)
+				var list = updated[action.bookmark.profile] ? updated[action.bookmark.profile] : [];
+				// NOT updatedList.push(action.bookmakr)
+				list.push(action.bookmark);
+				updated[action.bookmark.profile] = list;
+	
 				return updated;
 	
 			default:
