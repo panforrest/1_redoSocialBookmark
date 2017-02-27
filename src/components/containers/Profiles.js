@@ -38,6 +38,10 @@ class Profiles extends Component {
 
     }
 
+    // componentDidUpdate(){
+    //     console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))   //NOT (state.profile.selected)
+    // }
+
     selectProfile(profile, event){
         event.preventDefault()   //NOT JUST preventDefault()
         //console.log('Select Profile: '+JSON.stringify(profile))   //NOT (this.state.proifle)

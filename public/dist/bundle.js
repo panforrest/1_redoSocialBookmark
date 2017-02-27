@@ -21771,6 +21771,11 @@
 	            // 	console.log(JSON.stringify(response.body))
 	            // })
 	        }
+	
+	        // componentDidUpdate(){
+	        //     console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))   //NOT (state.profile.selected)
+	        // }
+	
 	    }, {
 	        key: 'selectProfile',
 	        value: function selectProfile(profile, event) {
@@ -26783,21 +26788,32 @@
 	  _createClass(Bookmarks, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // // console.log('conponentDidMount: ')
+	      // //console.log('Bookmarks Container: '+JSON.stringify(this.state.Bookmarks))
+	      // APIManager.get('/api/bookmark', null, (err, response) =>{
+	      //        if (err) {
+	      //        	alert(err)
+	      //        	return
+	      //        }
+	      //        // console.log('BOOKMARK LIST: '+JSON.stringify(response))
+	      //        // const bookmarks = response.results   //NOT var bookmarks = response.bookmarks
+	      //        // this.setState({
+	      //        //     bookmarks: bookmarks
+	      //        // })
+	      //        this.props.bookmarksReceived(response.results)   //NOT this.props.bookmarksReceived(bookmarks)
+	      // })
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
 	      var _this2 = this;
 	
-	      // console.log('conponentDidMount: ')
-	      //console.log('Bookmarks Container: '+JSON.stringify(this.state.Bookmarks))
-	      _utils.APIManager.get('/api/bookmark', null, function (err, response) {
+	      console.log('componentDidUpdate: ' + JSON.stringify(this.props.selected));
+	      _utils.APIManager.get('/api/bookmark', { profile: this.props.selected.id }, function (err, response) {
 	        if (err) {
-	          alert(err);
 	          return;
 	        }
-	        // console.log('BOOKMARK LIST: '+JSON.stringify(response))
-	        // const bookmarks = response.results   //NOT var bookmarks = response.bookmarks
-	        // this.setState({
-	        //     bookmarks: bookmarks
-	        // })
-	        _this2.props.bookmarksReceived(response.results); //NOT this.props.bookmarksReceived(bookmarks)
+	        _this2.props.bookmarksReceived(response.results);
 	      });
 	    }
 	  }, {
@@ -26829,6 +26845,7 @@
 	
 	var stateToProps = function stateToProps(state) {
 	  return {
+	    selected: state.profile.selected,
 	    bookmarks: state.bookmark.all
 	  };
 	};
@@ -26971,7 +26988,7 @@
 	    var updated = Object.assign({}, state);
 	    switch (action.type) {//NOT switch(state=initialState, action) => {
 	        case _constants2.default.PROFILES_RECEIVED:
-	            console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
+	            // console.log('PROFILES_RECEIVED: '+JSON.stringify(action.profiles))
 	            updated['list'] = action.profiles;
 	            if (action.profiles.length > 0) updated['selected'] = action.profiles[0];
 	
@@ -26985,6 +27002,9 @@
 	
 	        case _constants2.default.PROFILE_SELECTED:
 	            console.log('PROFILE_SELECTED: ' + JSON.stringify(action.profile));
+	            updated['selected'] = action.profile;
+	
+	            return updated; //IF MISSING THIS LINE, THE SELECTED PROFILE WON'T CHANGE COLOR 
 	
 	        default:
 	            return state; //NOTstatus

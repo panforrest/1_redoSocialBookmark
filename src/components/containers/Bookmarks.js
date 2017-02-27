@@ -12,20 +12,30 @@ class Bookmarks extends Component {
     }
 
     componentDidMount(){
-    	// console.log('conponentDidMount: ')
-    	//console.log('Bookmarks Container: '+JSON.stringify(this.state.Bookmarks))
-    	APIManager.get('/api/bookmark', null, (err, response) =>{
-            if (err) {
-            	alert(err)
-            	return
+    	// // console.log('conponentDidMount: ')
+    	// //console.log('Bookmarks Container: '+JSON.stringify(this.state.Bookmarks))
+    	// APIManager.get('/api/bookmark', null, (err, response) =>{
+     //        if (err) {
+     //        	alert(err)
+     //        	return
+     //        }
+     //        // console.log('BOOKMARK LIST: '+JSON.stringify(response))
+     //        // const bookmarks = response.results   //NOT var bookmarks = response.bookmarks
+     //        // this.setState({
+     //        //     bookmarks: bookmarks
+     //        // })
+     //        this.props.bookmarksReceived(response.results)   //NOT this.props.bookmarksReceived(bookmarks)
+    	// })
+    }
+
+    componentDidUpdate(){
+        console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))
+        APIManager.get('/api/bookmark', {profile: this.props.selected.id}, (err, response) => {
+            if(err){
+                return
             }
-            // console.log('BOOKMARK LIST: '+JSON.stringify(response))
-            // const bookmarks = response.results   //NOT var bookmarks = response.bookmarks
-            // this.setState({
-            //     bookmarks: bookmarks
-            // })
-            this.props.bookmarksReceived(response.results)   //NOT this.props.bookmarksReceived(bookmarks)
-    	})
+            this.props.bookmarksReceived(response.results)
+        })
     }
 
 	render() {
@@ -48,6 +58,7 @@ class Bookmarks extends Component {
 
 const stateToProps = (state) => {
 	return {
+        selected: state.profile.selected,
 		bookmarks: state.bookmark.all
 	}
 }
