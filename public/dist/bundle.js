@@ -26300,10 +26300,11 @@
 	        };
 	    },
 	
-	    bookmarksReceived: function bookmarksReceived(bookmarks) {
+	    bookmarksReceived: function bookmarksReceived(bookmarks, params) {
 	        return {
 	            type: _constants2.default.BOOKMARKS_RECEIVED,
-	            bookmarks: bookmarks
+	            bookmarks: bookmarks,
+	            params: params
 	        };
 	    },
 	
@@ -26487,7 +26488,8 @@
 	                profile: this.props.currentUser.id, //NOT profile: this.props.profile 
 	                url: this.state.link
 	            };
-	            console.log('submitLink: ' + JSON.stringify(bookmark));
+	            // console.log('submitLink: '+JSON.stringify(bookmark))
+	            console.log('currentuser.id: ' + JSON.stringify(this.props.currentUser.id));
 	
 	            _utils.APIManager.post('/api/bookmark', bookmark, function (err, response) {
 	                //NOT , this.state.link, 
@@ -26809,32 +26811,47 @@
 	      var _this2 = this;
 	
 	      console.log('componentDidUpdate: ' + JSON.stringify(this.props.selected));
+	      var list = this.props.bookmarks[this.props.selected.id];
+	      if (list != null) return;
+	
+	      var params = { profile: this.props.selected.id };
 	      _utils.APIManager.get('/api/bookmark', { profile: this.props.selected.id }, function (err, response) {
 	        if (err) {
 	          return;
 	        }
-	        _this2.props.bookmarksReceived(response.results);
+	        _this2.props.bookmarksReceived(response.results, params);
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var list = this.props.bookmarks.map(function (bookmark, i) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: bookmark.id },
-	          bookmark.description
-	        );
-	      });
+	      var list = this.props.selected == null ? null : this.props.bookmarks[this.props.selected.id];
+	      // bookmarks.map(function(bookmark, i) {
+	      // 	return (
+	      // 	    <li key={bookmark.id}>{bookmark.description}</li> 
+	      // 	)   
+	      // })
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'This is Bookmarks Containter',
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Bookmarks'
+	        ),
 	        _react2.default.createElement(
 	          'ol',
 	          null,
-	          list
+	          list == null ? null : list.map(function (bookmark, i) {
+	            return _react2.default.createElement(
+	              'li',
+	              { key: bookmark.id },
+	              ' ',
+	              bookmark.description,
+	              ' '
+	            );
+	          })
 	        )
 	      );
 	    }
@@ -26846,14 +26863,14 @@
 	var stateToProps = function stateToProps(state) {
 	  return {
 	    selected: state.profile.selected,
-	    bookmarks: state.bookmark.all
+	    bookmarks: state.bookmark
 	  };
 	};
 	
 	var dispatchToProps = function dispatchToProps(dispatch) {
 	  return {
-	    bookmarksReceived: function bookmarksReceived(bookmarks) {
-	      return dispatch(_actions2.default.bookmarksReceived(bookmarks));
+	    bookmarksReceived: function bookmarksReceived(bookmarks, params) {
+	      return dispatch(_actions2.default.bookmarksReceived(bookmarks, params));
 	    }
 	  };
 	};
@@ -27070,7 +27087,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var initialState = {
-		all: [] //NOT bookmarks: []
+		// all: []   //NOT bookmarks: []
 	};
 	
 	exports.default = function () {
@@ -27083,7 +27100,13 @@
 			case _constants2.default.BOOKMARKS_RECEIVED:
 				// updated['list'] = action.bookmarks
 				console.log('BOOKMARKS_RECEIVED: ' + JSON.stringify(action.bookmarks));
-				updated['all'] = action.bookmarks; //NEWLY ADDED
+				var params = action.params;
+				var keys = Object.keys(params);
+				keys.forEach(function (key, i) {
+					var value = params[key];
+					updated[value] = action.bookmarks;
+				});
+				// updated['all'] = action.bookmarks    //NEWLY ADDED
 				return updated;
 	
 			default:

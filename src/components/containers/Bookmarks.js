@@ -30,26 +30,38 @@ class Bookmarks extends Component {
 
     componentDidUpdate(){
         console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))
+        const list = this.props.bookmarks[this.props.selected.id]
+        if (list !=null)
+            return
+
+        const params = {profile: this.props.selected.id}
         APIManager.get('/api/bookmark', {profile: this.props.selected.id}, (err, response) => {
             if(err){
                 return
             }
-            this.props.bookmarksReceived(response.results)
+            this.props.bookmarksReceived(response.results, params)
         })
     }
 
 	render() {
-        const list = this.props.bookmarks.map(function(bookmark, i) {
-        	return (
-        	    <li key={bookmark.id}>{bookmark.description}</li> 
-        	)   
-        })
+        const list = (this.props.selected == null) ? null : this.props.bookmarks[this.props.selected.id]
+        // bookmarks.map(function(bookmark, i) {
+        // 	return (
+        // 	    <li key={bookmark.id}>{bookmark.description}</li> 
+        // 	)   
+        // })
 
 		return (
 			<div>
-			    This is Bookmarks Containter
+			    <h2>Bookmarks</h2>
 			    <ol>
-			        {list}
+			        { (list == null) ? null : list.map((bookmark, i) => {
+                            return <li key={bookmark.id}> {bookmark.description} </li>
+ 
+                        })
+
+
+                    }
 			    </ol>
 			</div>
 		)
@@ -59,13 +71,13 @@ class Bookmarks extends Component {
 const stateToProps = (state) => {
 	return {
         selected: state.profile.selected,
-		bookmarks: state.bookmark.all
+		bookmarks: state.bookmark
 	}
 }
 
 const dispatchToProps = (dispatch) => {
 	return {
-		bookmarksReceived: (bookmarks) => dispatch(actions.bookmarksReceived(bookmarks))
+		bookmarksReceived: (bookmarks, params) => dispatch(actions.bookmarksReceived(bookmarks, params))
 	}
 }
 

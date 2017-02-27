@@ -102,7 +102,8 @@ class Admin extends Component {
     		profile: this.props.currentUser.id,     //NOT profile: this.props.profile 
     		url: this.state.link
     	}
-        console.log('submitLink: '+JSON.stringify(bookmark))
+        // console.log('submitLink: '+JSON.stringify(bookmark))
+        console.log('currentuser.id: '+JSON.stringify(this.props.currentUser.id))
 
     	APIManager.post('/api/bookmark', bookmark, (err, response) => {    //NOT , this.state.link, 
     		if(err){
